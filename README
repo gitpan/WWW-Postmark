@@ -2,7 +2,7 @@ NAME
     WWW::Postmark - API for the Postmark mail service for web applications.
 
 VERSION
-    version 0.1
+    version 0.2
 
 SYNOPSIS
             use WWW::Postmark;

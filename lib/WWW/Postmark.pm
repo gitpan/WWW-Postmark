@@ -1,6 +1,6 @@
 package WWW::Postmark;
 BEGIN {
-  $WWW::Postmark::VERSION = '0.1';
+  $WWW::Postmark::VERSION = '0.2';
 }
 
 use strict;
@@ -26,7 +26,7 @@ WWW::Postmark - API for the Postmark mail service for web applications.
 
 =head1 VERSION
 
-version 0.1
+version 0.2
 
 =head1 SYNOPSIS
 

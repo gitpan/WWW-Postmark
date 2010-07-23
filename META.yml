@@ -19,7 +19,8 @@ requires:
   JSON::Any: 0
   LWP::UserAgent: 0
   Try::Tiny: 0
+  perl: 5.010
 resources:
   homepage: http://github.com/ido50/WWW-Postmark/tree
   repository: git://github.com/ido50/WWW-Postmark.git
-version: 0.1
+version: 0.2
