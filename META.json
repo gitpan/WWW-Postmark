@@ -1,0 +1,52 @@
+{
+   "abstract" : "API for the Postmark mail service for web applications.",
+   "author" : [
+      "Ido Perlmuter <ido@ido50.net>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.110440",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "WWW-Postmark",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "6.30"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Carp" : 0,
+            "Email::Valid" : 0,
+            "HTTP::Tiny" : 0,
+            "JSON::Any" : 0,
+            "Try::Tiny" : 0,
+            "feature" : 0,
+            "perl" : "5.010",
+            "strict" : 0,
+            "warnings" : 0
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : 0
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "homepage" : "http://github.com/ido50/WWW-Postmark",
+      "repository" : {
+         "type" : "git",
+         "url" : "http://github.com/ido50/WWW-Postmark",
+         "web" : "http://github.com/ido50/WWW-Postmark"
+      }
+   },
+   "version" : "0.3"
+}
+

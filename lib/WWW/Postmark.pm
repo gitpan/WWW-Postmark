@@ -1,24 +1,24 @@
 package WWW::Postmark;
-BEGIN {
-  $WWW::Postmark::VERSION = '0.2';
-}
-
-use strict;
-use warnings;
-use feature "switch";
-use LWP::UserAgent;
-use JSON::Any;
-use Email::Valid;
-use Try::Tiny;
-use Carp;
 
 # ABSTRACT: API for the Postmark mail service for web applications.
 
-my $ua = LWP::UserAgent->new;
-$ua->timeout(30);
-$ua->env_proxy;
+use strict;
+use warnings;
+use feature 'switch';
 
+use Carp;
+use Email::Valid;
+use HTTP::Tiny;
+use JSON::Any;
+use Try::Tiny;
+
+our $VERSION = "0.3";
+$VERSION = eval $VERSION;
+
+my $ua = HTTP::Tiny->new(timeout => 45);
 my $json = JSON::Any->new;
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -26,7 +26,7 @@ WWW::Postmark - API for the Postmark mail service for web applications.
 
 =head1 VERSION
 
-version 0.2
+version 0.3
 
 =head1 SYNOPSIS
 
@@ -46,8 +46,8 @@ version 0.2
 The WWW::Postmark module provides a simple API for the Postmark web service,
 that provides email sending facilities for web applications. Postmark is
 located at L<http://postmarkapp.com>. It is a paid service that charges
-according the amount of emails you send (right now first 1,000 emails are
-free), and requires signing up in order to receive an API token.
+according the amount of emails you send, and requires signing up in order
+to receive an API token.
 
 You can send emails either through HTTP or HTTPS with SSL encryption. You
 can send your emails to multiple recipients at once (but there's a 20
@@ -63,21 +63,29 @@ Postmark provides a test API token that doesn't really send the emails.
 The token is 'POSTMARK_API_TEST', and you can use it for testing purposes
 (the tests in this distribution use this token).
 
+Besides sending emails, this module also provides support for Postmark's
+spam score API, which allows you to get a SpamAssassin report for an email
+message. See documentation for the C<spam_score()> method for more info.
+
 =head1 METHODS
 
-=head2 new( $api_token, [$use_ssl] )
+=head2 new( [ $api_token, $use_ssl] )
 
 Creates a new instance of this class, with a Postmark API token that you've
 received from the Postmark app. By default, requests are made through HTTP;
 if you want to send them with SSL encryption, pass a true value for
 C<$use_ssl>.
 
+If you do not provide an API token, you will only be able to use Postmark's
+spam score API (you will not be able to send emails).
+
 =cut
 
 sub new {
 	my ($class, $token, $use_ssl) = @_;
 
-	croak "You must provide your Postmark API token." unless $token;
+	carp "You have not provided a Postmark API token, you will not be able to send emails."
+		unless $token;
 
 	$use_ssl ||= 0;
 	$use_ssl = 1 if $use_ssl;
@@ -123,6 +131,18 @@ to send HTML, be sure to open with '<html>' and close with '</html>'. This
 module will look for these tags in order to find out whether you're sending
 a text message or an HTML message.
 
+Since version 0.3, however, you can explicitly specify the type of your
+message, and also send both plain text and HTML. To do so, use the C<html>
+and/or C<text> attributes. Their presence will override C<body>.
+
+=item * html
+
+Instead of using C<body> you can also specify the HTML content directly.
+
+=item * text
+
+... or the plain text part of the email.
+
 =back
 
 You can optionally supply the following parameters as well:
@@ -150,6 +170,10 @@ address when replying to your email.
 sub send {
 	my ($self, %params) = @_;
 
+	# do we have an API token?
+	croak "You have not provided a Postmark API token, you cannot send emails"
+		unless $self->{token};
+
 	# make sure there's a from address
 	croak "You must provide a valid 'from' address in the format 'address\@domain.tld', or 'Your Name <address\@domain.tld>'."
 		unless $params{from} && Email::Valid->address($params{from});
@@ -171,7 +195,7 @@ sub send {
 
 	# make sure there's a mail body
 	croak "You must provide a mail body."
-		unless $params{body};
+		unless $params{body} or $params{html} or $params{text};
 
 	# if cc and/or bcc are provided, validate them
 	if ($params{cc}) {
@@ -195,14 +219,16 @@ sub send {
 			unless Email::Valid->address($params{reply_to});
 	}
 
-	# parse the body param
-	my $body = delete $params{body};
-	if ($body =~ m/^\<html\>/i && $body =~ m!\</html\>$!i) {
-		# this is an HTML message
-		$params{html} = $body;
-	} else {
-		# this is a test message
-		$params{text} = $body;
+	# parse the body param, unless html or text are present
+	unless ($params{html} || $params{text}) {
+		my $body = delete $params{body};
+		if ($body =~ m/^\<html\>/i && $body =~ m!\</html\>$!i) {
+			# this is an HTML message
+			$params{html} = $body;
+		} else {
+			# this is a test message
+			$params{text} = $body;
+		}
 	}
 
 	# all's well, let's try an send this
@@ -221,18 +247,82 @@ sub send {
 	$msg->{Tag} = $params{tag} if $params{tag};
 	$msg->{ReplyTo} = $params{reply_to} if $params{reply_to};
 
-	# create an HTTP::Request object
-	my $req = HTTP::Request->new('post', $self->{use_ssl} ? 'https://api.postmarkapp.com/email' : 'http://api.postmarkapp.com/email', ['Accept' => 'application/json', 'Content-Type' => 'application/json', 'X-Postmark-Server-Token' => $self->{token} ], $json->to_json($msg));
-
-	# send the request
-	my $res = $ua->request($req);
+	# create and send the request
+	my $res = $ua->request(
+		'POST',
+		$self->{use_ssl} ? 'https://api.postmarkapp.com/email' : 'http://api.postmarkapp.com/email',
+		{
+			headers => {
+				'Accept' => 'application/json',
+				'Content-Type' => 'application/json',
+				'X-Postmark-Server-Token' => $self->{token},
+			},
+			content => $json->to_json($msg),
+		}
+	);
 
 	# analyze the response
-	if ($res->is_success) {
+	if ($res->{success}) {
 		# woooooooooooooeeeeeeeeeeee
 		return 1;
 	} else {
 		croak "Failed sending message: ".$self->_analyze_response($res);
+	}
+}
+
+=head2 spam_score( $raw_email, [ $options ] )
+
+Use Postmark's SpamAssassin API to determine the spam score of an email
+message. You need to provide the raw email text to this method, with all
+headers intact. If C<$options> is 'long' (the default), this method
+will return a hash-ref with a 'report' key, containing the full
+SpamAssasin report, and a 'score' key, containing the spam score. If
+C<$options> is 'short', only the spam score will be returned (directly, not
+in a hash-ref).
+
+If the API returns an error, this method will croak.
+
+Note that the SpamAssassin API is currently HTTP only, there is no HTTPS
+interface, so the C<use_ssl> option to the C<new()> method is ignored here.
+
+For more information about this API, go to L<http://spamcheck.postmarkapp.com>.
+
+=cut
+
+sub spam_score {
+	my ($self, $raw_email, $options) = @_;
+
+	croak 'You must provide the raw email text to spam_score().'
+		unless $raw_email;
+
+	$options ||= 'long';
+
+	my $res = $ua->request(
+		'POST',
+		'http://spamcheck.postmarkapp.com/filter',
+		{
+			headers => {
+				'Accept' => 'application/json',
+				'Content-Type' => 'application/json',
+			},
+			content => $json->to_json({
+				email => $raw_email,
+				options => $options,
+			}),
+		}
+	);
+
+	# analyze the response
+	if ($res->{success}) {
+		# doesn't mean we have succeeded, an error may have been returned
+		my $ret = $json->from_json($res->{content});
+		if ($ret->{success}) {
+			return $options eq 'long' ? $ret : $ret->{score};
+		} else {
+			croak "Postmark spam score API returned error: ".$ret->{message};
+		}
+	} else {
+		croak "Failed determining spam score: $res->{content}";
 	}
 }
 
@@ -281,13 +371,13 @@ sub _recipient_error {
 sub _analyze_response {
 	my ($self, $res) = @_;
 
-	given ($res->code) {
+	given ($res->{status}) {
 		when (401) {
 			return "Missing or incorrect API Key header.";
 		}
 		when (422) {
 			# error is in the JSON thingy
-			my $msg = $json->from_json($res->content);
+			my $msg = $json->from_json($res->{content});
 
 			my $code_msg;
 			given ($msg->{ErrorCode}) {
@@ -342,6 +432,10 @@ sub _analyze_response {
 =head1 AUTHOR
 
 Ido Perlmuter, C<< <ido at ido50 dot net> >>
+
+=head1 ACKNOWLEDGMENTS
+
+Ask Bjørn Hansen, for submitting a patch.
 
 =head1 BUGS
 

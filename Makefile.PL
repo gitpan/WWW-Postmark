@@ -2,35 +2,38 @@
 use strict;
 use warnings;
 
-BEGIN { require 5.010; }
+use 5.010;
 
-use ExtUtils::MakeMaker 6.31;
+use ExtUtils::MakeMaker 6.30;
 
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'API for the Postmark mail service for web applications.',
-  'AUTHOR' => 'Ido Perlmuter <ido@ido50.net>',
-  'BUILD_REQUIRES' => {
-    'Test::More' => '0'
+  "ABSTRACT" => "API for the Postmark mail service for web applications.",
+  "AUTHOR" => "Ido Perlmuter <ido\@ido50.net>",
+  "BUILD_REQUIRES" => {
+    "Test::More" => 0
   },
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.31'
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'WWW-Postmark',
-  'EXE_FILES' => [],
-  'LICENSE' => 'perl',
-  'NAME' => 'WWW::Postmark',
-  'PREREQ_PM' => {
-    'Carp' => '0',
-    'Email::Valid' => '0',
-    'JSON::Any' => '0',
-    'LWP::UserAgent' => '0',
-    'Try::Tiny' => '0'
+  "DISTNAME" => "WWW-Postmark",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "WWW::Postmark",
+  "PREREQ_PM" => {
+    "Carp" => 0,
+    "Email::Valid" => 0,
+    "HTTP::Tiny" => 0,
+    "JSON::Any" => 0,
+    "Try::Tiny" => 0,
+    "feature" => 0,
+    "strict" => 0,
+    "warnings" => 0
   },
-  'VERSION' => '0.2',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "0.3",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 
