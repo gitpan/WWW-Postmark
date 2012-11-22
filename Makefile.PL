@@ -26,12 +26,11 @@ my %WriteMakefileArgs = (
     "Email::Valid" => 0,
     "HTTP::Tiny" => 0,
     "JSON::Any" => 0,
-    "Try::Tiny" => 0,
     "feature" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.3",
+  "VERSION" => "0.4",
   "test" => {
     "TESTS" => "t/*.t"
   }

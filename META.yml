@@ -7,23 +7,25 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300002, CPAN::Meta::Converter version 2.110440'
+generated_by: 'Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: WWW-Postmark
+recommends:
+  JSON: 2.50
+  JSON::XS: 2.3
 requires:
   Carp: 0
   Email::Valid: 0
   HTTP::Tiny: 0
   JSON::Any: 0
-  Try::Tiny: 0
   feature: 0
   perl: 5.010
   strict: 0
   warnings: 0
 resources:
-  homepage: http://github.com/ido50/WWW-Postmark
-  repository: http://github.com/ido50/WWW-Postmark
-version: 0.3
+  homepage: https://github.com/ido50/WWW-Postmark
+  repository: https://github.com/ido50/WWW-Postmark.git
+version: 0.4
