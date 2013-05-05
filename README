@@ -2,7 +2,7 @@ NAME
     WWW::Postmark - API for the Postmark mail service for web applications.
 
 VERSION
-    version 0.4
+    version 0.5
 
 SYNOPSIS
             use WWW::Postmark;
@@ -56,8 +56,11 @@ METHODS
   send( %params )
     Receives a hash representing the email message that should be sent and
     attempts to send it through the Postmark service. If the message was
-    successfully sent, a true value is returned; otherwise, this method will
-    croak with an approriate error message (see ""ERRORS" for a full list).
+    successfully sent, a hash reference of Postmark's response is returned
+    (refer to the relevant Postmark documentation
+    <http://developer.postmarkapp.com/developer-build.html#success-response>
+    ); otherwise, this method will croak with an approriate error message
+    (see "DIAGNOSTICS" for a full list).
 
     The following keys are required when using this method:
 
@@ -219,10 +222,11 @@ DEPENDENCIES
 
     *   HTTP::Tiny
 
-    *   JSON::Any
+    *   JSON
 
-    "WWW::Postmark" recommends JSON and/or JSON::XS for actually being able
-    to parse JSON (the Postmark API is JSON based).
+    "WWW::Postmark" recommends JSON::XS for parsing JSON (the Postmark API
+    is JSON based). If installed, JSON will automatically load JSON::XS
+    instead.
 
 INCOMPATIBILITIES WITH OTHER MODULES
     None reported.
@@ -238,7 +242,7 @@ AUTHOR
     Ido Perlmuter <ido@ido50.net>
 
 LICENSE AND COPYRIGHT
-    Copyright (c) 2010-2012, Ido Perlmuter "ido@ido50.net".
+    Copyright (c) 2010-2013, Ido Perlmuter "ido@ido50.net".
 
     This module is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself, either version 5.8.1 or any later

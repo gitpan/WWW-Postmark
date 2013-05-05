@@ -25,12 +25,12 @@ my %WriteMakefileArgs = (
     "Carp" => 0,
     "Email::Valid" => 0,
     "HTTP::Tiny" => 0,
-    "JSON::Any" => 0,
+    "JSON" => 0,
     "feature" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.4",
+  "VERSION" => "0.5",
   "test" => {
     "TESTS" => "t/*.t"
   }

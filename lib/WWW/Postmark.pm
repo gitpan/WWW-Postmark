@@ -9,13 +9,12 @@ use feature 'switch';
 use Carp;
 use Email::Valid;
 use HTTP::Tiny;
-use JSON::Any;
+use JSON;
 
-our $VERSION = "0.4";
+our $VERSION = "0.5";
 $VERSION = eval $VERSION;
 
 my $ua = HTTP::Tiny->new(timeout => 45);
-my $json = JSON::Any->new;
 
 =encoding utf-8
 
@@ -25,7 +24,7 @@ WWW::Postmark - API for the Postmark mail service for web applications.
 
 =head1 VERSION
 
-version 0.4
+version 0.5
 
 =head1 SYNOPSIS
 
@@ -96,8 +95,10 @@ sub new {
 
 Receives a hash representing the email message that should be sent and
 attempts to send it through the Postmark service. If the message was
-successfully sent, a true value is returned; otherwise, this method will
-croak with an approriate error message (see L</"ERRORS> for a full list).
+successfully sent, a hash reference of Postmark's response is returned
+(refer to L<the relevant Postmark documentation|http://developer.postmarkapp.com/developer-build.html#success-response>);
+otherwise, this method will croak with an approriate error message (see
+L</"DIAGNOSTICS"> for a full list).
 
 The following keys are required when using this method:
 
@@ -241,14 +242,14 @@ sub send {
 				'Content-Type' => 'application/json',
 				'X-Postmark-Server-Token' => $self->{token},
 			},
-			content => $json->to_json($msg),
+			content => encode_json($msg),
 		}
 	);
 
 	# analyze the response
 	if ($res->{success}) {
 		# woooooooooooooeeeeeeeeeeee
-		return 1;
+		return decode_json($res->{content});
 	} else {
 		croak "Failed sending message: ".$self->_analyze_response($res);
 	}
@@ -289,7 +290,7 @@ sub spam_score {
 				'Accept' => 'application/json',
 				'Content-Type' => 'application/json',
 			},
-			content => $json->to_json({
+			content => encode_json({
 				email => $raw_email,
 				options => $options,
 			}),
@@ -299,7 +300,7 @@ sub spam_score {
 	# analyze the response
 	if ($res->{success}) {
 		# doesn't mean we have succeeded, an error may have been returned
-		my $ret = $json->from_json($res->{content});
+		my $ret = decode_json($res->{content});
 		if ($ret->{success}) {
 			return $options eq 'long' ? $ret : $ret->{score};
 		} else {
@@ -349,7 +350,7 @@ sub _analyze_response {
 		}
 		when (422) {
 			# error is in the JSON thingy
-			my $msg = $json->from_json($res->{content});
+			my $msg = decode_json($res->{content});
 
 			my $code_msg;
 			given ($msg->{ErrorCode}) {
@@ -497,13 +498,13 @@ C<WWW::Postmark> B<depends> on the following CPAN modules:
 
 =item * L<HTTP::Tiny>
 
-=item * L<JSON::Any>
+=item * L<JSON>
 
 =back
 
-C<WWW::Postmark> recommends L<JSON> and/or L<JSON::XS>
-for actually being able to parse JSON (the Postmark API
-is JSON based).
+C<WWW::Postmark> recommends L<JSON::XS> for parsing JSON (the Postmark API
+is JSON based). If installed, L<JSON> will automatically load L<JSON::XS>
+instead.
 
 =head1 INCOMPATIBILITIES WITH OTHER MODULES
 
@@ -523,7 +524,7 @@ Ido Perlmuter <ido@ido50.net>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2010-2012, Ido Perlmuter C<< ido@ido50.net >>.
+Copyright (c) 2010-2013, Ido Perlmuter C<< ido@ido50.net >>.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself, either version

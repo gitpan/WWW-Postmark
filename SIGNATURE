@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.69.
+signed via the Module::Signature module, version 0.70.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,27 +14,27 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-SHA1 ef28de32492d528be10054e4c7c049ac92f055a0 Changes
+SHA1 36834f4bb2070f3f8e2ae8fccffaff1d7fd5d4d7 Changes
 SHA1 d0d91a8e1bc211f7ec49f2fd2dfc277bd5db8f75 INSTALL
 SHA1 eff3e23d91ada044b3ab9d3b7ac30524e57ca7ef LICENSE
 SHA1 3c2ad12458a8e8805da99f029b3d8ffac549449e MANIFEST
 SHA1 2ecde0538d56217182e6ad3ba8422dcc417fa80b MANIFEST.SKIP
-SHA1 eb21fa1d346c53f3443099e58dc1cf4ac27c1667 META.json
-SHA1 46ff97869615ba00978bdd4eded0b8cde1539b46 META.yml
-SHA1 9317a6cd05d23feac720d9810ba547af6203ea2f Makefile.PL
-SHA1 941d440fd0b847527108f44b7af1a7fa782b9046 README
-SHA1 3266215719bcb453ab898e7e8c3a231a87764282 dist.ini
-SHA1 4a9b9a7db87530299fe900021be0c77637c5cb81 lib/WWW/Postmark.pm
+SHA1 48c23fb9d450ba580a1f1c9dbe47098910299453 META.json
+SHA1 48c63a68edb31665a0cac6a6a97166673966cdf6 META.yml
+SHA1 27fd754538cf445942f4020bcabb0f84d347c5f8 Makefile.PL
+SHA1 64bb87700e97a599ce5f601398517ecad2f4e545 README
+SHA1 c82a5b53a0f99706d1d39e6a99dd51c83f3cdd2f dist.ini
+SHA1 398396ff5fb687576042f906435c886965f7955c lib/WWW/Postmark.pm
 SHA1 f4bb0ee9aae34ee1883e599fb96e8f928a27d934 t/00-load.t
-SHA1 881b9217a4fb65f642f772518eb1bc0644a3a363 t/01-sending.t
-SHA1 192faed0dd8a3cd13425bc6e7afdac16e7056390 t/02-spam_score.t
+SHA1 44fcd4dbdc704c5a1cccfdc1ef317ab97fa9512f t/01-sending.t
+SHA1 c3afae2fc4f5b5389302f3bfb4d65f3b7d364bdf t/02-spam_score.t
 SHA1 87768d177f8c2e2df9c591cde869e7c8a245555e t/release-dist-manifest.t
 SHA1 9433c240fe590bc404ab68ff63984df763e347ed t/release-pod-coverage.t
 SHA1 b30cbdfaf935017c4568c0c91b242438cb87786e t/release-pod-syntax.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.19 (GNU/Linux)
 
-iF4EAREIAAYFAlCuiY0ACgkQa4OHQAFM10fiuAEAig2BTDrjN9OhUTBa36J5YFyH
-aXuX89h67vptv7wn4bcA+QHg+s0ImpLRUoKE29MgH3DFdGfOffthn+LxEeN6IAeB
-=tRTr
+iF4EAREIAAYFAlGGmP0ACgkQa4OHQAFM10eKVwD/S9Th2T7aLgeaD2HKL1RUCuh2
+tMkkXQFPc6eBBiyh+ycBAIrbocW1SCQ0+fKwh1OZhhZndUfT3N9+VZ1GBVwpFgLo
+=NdhU
 -----END PGP SIGNATURE-----
