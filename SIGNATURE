@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.70.
+signed via the Module::Signature module, version 0.73.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,27 +14,24 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-SHA1 36834f4bb2070f3f8e2ae8fccffaff1d7fd5d4d7 Changes
+SHA1 7280ab62098835979825841e155cf9c888b16e0b Changes
 SHA1 d0d91a8e1bc211f7ec49f2fd2dfc277bd5db8f75 INSTALL
-SHA1 eff3e23d91ada044b3ab9d3b7ac30524e57ca7ef LICENSE
-SHA1 3c2ad12458a8e8805da99f029b3d8ffac549449e MANIFEST
+SHA1 0c188fd1eacab0ad577840aa526dda8dfbdc8d6a LICENSE
+SHA1 e8b9be7aa9d6b4ed3e6c6c166bae5f6b8d0a2340 MANIFEST
 SHA1 2ecde0538d56217182e6ad3ba8422dcc417fa80b MANIFEST.SKIP
-SHA1 48c23fb9d450ba580a1f1c9dbe47098910299453 META.json
-SHA1 48c63a68edb31665a0cac6a6a97166673966cdf6 META.yml
-SHA1 27fd754538cf445942f4020bcabb0f84d347c5f8 Makefile.PL
-SHA1 64bb87700e97a599ce5f601398517ecad2f4e545 README
+SHA1 a44a69b5891b6323c0943e972f01739467eca35b META.json
+SHA1 44c07178d9a1272a84f4aabca2406f596b523abd Makefile.PL
+SHA1 11aae2b17f7ed34855faadddd961a95ae10dd412 README
 SHA1 c82a5b53a0f99706d1d39e6a99dd51c83f3cdd2f dist.ini
-SHA1 398396ff5fb687576042f906435c886965f7955c lib/WWW/Postmark.pm
+SHA1 891b440ca7935f10c929073b4c793d5c82908882 lib/WWW/Postmark.pm
 SHA1 f4bb0ee9aae34ee1883e599fb96e8f928a27d934 t/00-load.t
 SHA1 44fcd4dbdc704c5a1cccfdc1ef317ab97fa9512f t/01-sending.t
 SHA1 c3afae2fc4f5b5389302f3bfb4d65f3b7d364bdf t/02-spam_score.t
 SHA1 87768d177f8c2e2df9c591cde869e7c8a245555e t/release-dist-manifest.t
-SHA1 9433c240fe590bc404ab68ff63984df763e347ed t/release-pod-coverage.t
-SHA1 b30cbdfaf935017c4568c0c91b242438cb87786e t/release-pod-syntax.t
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.19 (GNU/Linux)
+Version: GnuPG v2
 
-iF4EAREIAAYFAlGGmP0ACgkQa4OHQAFM10eKVwD/S9Th2T7aLgeaD2HKL1RUCuh2
-tMkkXQFPc6eBBiyh+ycBAIrbocW1SCQ0+fKwh1OZhhZndUfT3N9+VZ1GBVwpFgLo
-=NdhU
+iF4EAREIAAYFAlOrFc4ACgkQa4OHQAFM10fbPwEAhZQZ3sO/JAneDeGG81x5dqIr
+CAeMBLm9QoWGQu7ooS0A/3Z+JGutdMqUsqPTyy+nVw22HyNts6T27zPs1GmbIlyn
+=GHE/
 -----END PGP SIGNATURE-----

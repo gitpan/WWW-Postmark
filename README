@@ -1,9 +1,6 @@
 NAME
     WWW::Postmark - API for the Postmark mail service for web applications.
 
-VERSION
-    version 0.5
-
 SYNOPSIS
             use WWW::Postmark;
 
@@ -119,6 +116,11 @@ METHODS
 
         Will force recipients of your email to send their replies to this
         mail address when replying to your email.
+
+    *   track_opens
+
+        Set to a true value to enable Postmark's open tracking
+        functionality.
 
   spam_score( $raw_email, [ $options ] )
     Use Postmark's SpamAssassin API to determine the spam score of an email
@@ -241,8 +243,10 @@ BUGS AND LIMITATIONS
 AUTHOR
     Ido Perlmuter <ido@ido50.net>
 
+    With help from: Casimir Loeber.
+
 LICENSE AND COPYRIGHT
-    Copyright (c) 2010-2013, Ido Perlmuter "ido@ido50.net".
+    Copyright (c) 2010-2014, Ido Perlmuter "ido@ido50.net".
 
     This module is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself, either version 5.8.1 or any later

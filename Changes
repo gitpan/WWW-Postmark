@@ -1,5 +1,9 @@
 Revision history for WWW-Postmark
 
+0.6       2014-06-25 21:32:44+03:00 Asia/Jerusalem
+	- Added support for Postmark's new Open Tracking feature (Casimir Loeber).
+	- Fixed bug causing the BCC option not to work (Casimir Loeber).
+
 0.5       2013-05-05 20:37:54 Asia/Jerusalem
 	- The send() method now returns Postmark's return hash instead
 	  of just a true value (thanks Alex Peters)
