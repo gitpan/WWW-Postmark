@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use 5.010000;
+use 5.006;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -24,14 +24,15 @@ my %WriteMakefileArgs = (
     "Email::Valid" => 0,
     "HTTP::Tiny" => 0,
     "JSON" => 0,
-    "feature" => 0,
     "strict" => 0,
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
+    "IO::Socket::SSL" => "1.42",
+    "Net::SSLeay" => "1.49",
     "Test::More" => 0
   },
-  "VERSION" => "0.6",
+  "VERSION" => "0.7",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -42,9 +43,10 @@ my %FallbackPrereqs = (
   "Carp" => 0,
   "Email::Valid" => 0,
   "HTTP::Tiny" => 0,
+  "IO::Socket::SSL" => "1.42",
   "JSON" => 0,
+  "Net::SSLeay" => "1.49",
   "Test::More" => 0,
-  "feature" => 0,
   "strict" => 0,
   "warnings" => 0
 );

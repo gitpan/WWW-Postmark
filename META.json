@@ -21,21 +21,24 @@
       },
       "runtime" : {
          "recommends" : {
-            "JSON::XS" : "2.3"
+            "IO::Socket::SSL" : "1.42",
+            "JSON::XS" : "2.3",
+            "Net::SSLeay" : "1.49"
          },
          "requires" : {
             "Carp" : "0",
             "Email::Valid" : "0",
             "HTTP::Tiny" : "0",
             "JSON" : "0",
-            "feature" : "0",
-            "perl" : "v5.10.0",
+            "perl" : "5.006",
             "strict" : "0",
             "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
+            "IO::Socket::SSL" : "1.42",
+            "Net::SSLeay" : "1.49",
             "Test::More" : "0"
          }
       }
@@ -52,6 +55,6 @@
          "web" : "https://github.com/ido50/WWW-Postmark"
       }
    },
-   "version" : "0.6"
+   "version" : "0.7"
 }
 

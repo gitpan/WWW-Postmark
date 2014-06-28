@@ -50,6 +50,10 @@ METHODS
     If you do not provide an API token, you will only be able to use
     Postmark's spam score API (you will not be able to send emails).
 
+    Note that in order to use SSL, "HTTP::Tiny" requires certain
+    dependencies to be installed. See "SSL SUPPORT" in HTTP::Tiny for more
+    information.
+
   send( %params )
     Receives a hash representing the email message that should be sent and
     attempts to send it through the Postmark service. If the message was
@@ -228,7 +232,8 @@ DEPENDENCIES
 
     "WWW::Postmark" recommends JSON::XS for parsing JSON (the Postmark API
     is JSON based). If installed, JSON will automatically load JSON::XS
-    instead.
+    instead. For SSL support, IO::Socket::SSL and Net::SSLeay are also
+    recommended.
 
 INCOMPATIBILITIES WITH OTHER MODULES
     None reported.
